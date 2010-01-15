@@ -160,7 +160,6 @@ route 'map.resources :users'
 route 'map.login "login", :controller => "user_sessions", :action => "new"'
 route 'map.logout "logout", :controller => "user_sessions", :action => "destroy"'
 
-
 file 'app/controllers/users_controller.rb', <<-END
 class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
@@ -284,7 +283,7 @@ file 'app/views/layouts/application.html.erb', <<-END
         <%= link_to 'Logout', logout_path %>
       </div>
       <%- flash.each do |name, msg| -%>
-        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+        <%= content_tag :div, msg, :id => "flash_\#{name}" %>
       <%- end -%>
       
       <%- if show_title? -%>
