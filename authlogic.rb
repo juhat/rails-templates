@@ -174,6 +174,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       flash[:notice] = "Account registered!"
+      UserMailer.deliver_welcome_email(@user, params[:user][:password])
       redirect_back_or_default account_url
     else
       render :action => :new
@@ -292,6 +293,38 @@ file 'app/views/layouts/application.html.erb', <<-END
       
       <%= yield %>
     </div>
+  </body>
+</html>
+END
+
+#Mailer
+
+generate :mailer, 'UserMailer'
+
+file 'app/models/user_mailer', <<-END
+def welcome_email(user, pwd)
+  recipients    user.email
+  from          "Test User <test@atti.la>"
+  subject       "Registration"
+  sent_on       Time.now
+  body          {:user => user, :password => pwd}
+end
+END
+
+file 'app/views/user_mailer/welcome_email.text.html.erb', <<-END
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Welcome to example.com, <%=h @user.email %></h1>
+    <p>
+      You have successfully signed up to example.com.<br/>
+      Your email is: <%= @user.email %>.<br/>
+      Your password is: <%= @password %>.<br/>
+    </p>
+    <p>Thanks for joining and have a great day!</p>
   </body>
 </html>
 END
