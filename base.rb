@@ -1,8 +1,8 @@
-if yes?("Do you want to use RSpec for testing?")
-  plugin "rspec", :git => "git://github.com/dchelimsky/rspec.git"
-  plugin "rspec-rails", :git => "git://github.com/dchelimsky/rspec-rails.git"
-  generate :rspec
-end
+# if yes?("Do you want to use RSpec for testing?")
+#   plugin "rspec", :git => "git://github.com/dchelimsky/rspec.git"
+#   plugin "rspec-rails", :git => "git://github.com/dchelimsky/rspec-rails.git"
+#   generate :rspec
+# end
 
 run 'sudo gem install nifty-generators'
 # rake "gems:install", :sudo => true
