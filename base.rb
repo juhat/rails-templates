@@ -4,8 +4,8 @@ if yes?("Do you want to use RSpec for testing?")
   generate :rspec
 end
 
-gem 'nifty-generators'
-rake "gems:install", :sudo => true
+run 'gem install nifty-generators', :sudo => true
+# rake "gems:install", :sudo => true
 generate :nifty_layout
 
 run "echo 'TODO add readme content' > README"
