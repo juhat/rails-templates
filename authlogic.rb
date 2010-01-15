@@ -53,8 +53,8 @@ generate :controller, 'user_sessions'
 
 route 'map.resource :user_session'
 route 'map.root :controller => "user_sessions", :action => "new"'
-route 'map.connect :login, :controller => "user_session", :action => "new"'
-route 'map.connect :logout, :controller => "user_session", :action => "destroy"'
+route 'map.login "login", :controller => "user_session", :action => "new"'
+route 'map.logout "logout", :controller => "user_session", :action => "destroy"'
 
 file 'app/controllers/user_sessions_controller.rb', <<-END
 class UserSessionsController < ApplicationController
