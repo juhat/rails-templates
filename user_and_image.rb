@@ -226,8 +226,8 @@ END
 
 file 'app/views/users/show.html.erb', <<-END
 <p>
-  <b>Login:</b>
-  <%=h @user.login %>
+  <b>Email:</b>
+  <%=h @user.Email %>
 </p>
 <p>
   <b>Login count:</b>
