@@ -30,7 +30,7 @@ generate :nifty_layout
 
 gem 'annotate'
 
-plugin 'action_mailer_optional_tls', git => 'git://github.com/collectiveidea/action_mailer_optional_tls.git', :submodule => true
+plugin 'action_mailer_optional_tls', :git => 'git://github.com/collectiveidea/action_mailer_optional_tls.git', :submodule => true
 
 file 'config/environments/development.rb', <<-END
 # Settings specified here will take precedence over those in config/environment.rb
