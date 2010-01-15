@@ -13,7 +13,7 @@ file 'db/migrate/20100101000000_create_users.rb', <<-END
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.string    :login,               :null => false                # optional, you can use email instead, or both
+      #t.string    :login,               :null => false                # optional, you can use email instead, or both
       t.string    :email,               :null => false                # optional, you can use login instead, or both
       t.string    :crypted_password,    :null => false                # optional, see below
       t.string    :password_salt,       :null => false                # optional, but highly recommended
@@ -41,7 +41,7 @@ END
 file 'app/models/user.rb', <<-END
 class User < ActiveRecord::Base
   acts_as_authentic do |c|
-    # c.my_config_option = my_value # for available options see documentation in: Authlogic::ActsAsAuthentic
+    c.login_field = 'email'
   end
 end
 END
@@ -86,8 +86,8 @@ file 'app/views/user_sessions/new.html.erb', <<-END
 
 <% form_for @user_session, :url => user_session_path do |f| %>
   <%= f.error_messages %>
-  <%= f.label :login %><br />
-  <%= f.text_field :login %><br />
+  <%= f.label :email %><br />
+  <%= f.text_field :email %><br />
   <br />
   <%= f.label :password %><br />
   <%= f.password_field :password %><br />
@@ -103,6 +103,7 @@ END
 file 'app/controllers/application_controller.rb', <<-END
 # app/controllers/application.rb
 class ApplicationController < ActionController::Base
+  helper :all
  filter_parameter_logging :password, :password_confirmation
  helper_method :current_user_session, :current_user
 
@@ -118,6 +119,24 @@ class ApplicationController < ActionController::Base
      return @current_user if defined?(@current_user)
      @current_user = current_user_session && current_user_session.user
    end
+   
+   def require_user
+      unless current_user
+        store_location
+        flash[:notice] = "You must be logged in to access this page"
+        redirect_to new_user_session_url
+        return false
+      end
+    end
+
+    def require_no_user
+      if current_user
+        store_location
+        flash[:notice] = "You must be logged out to access this page"
+        redirect_to account_url
+        return false
+      end
+    end
 end
 END
 
@@ -168,8 +187,8 @@ end
 END
 
 file 'app/views/users/_form.erb', <<-END
-<%= form.label :login %><br />
-<%= form.text_field :login %><br />
+<%= form.label :email %><br />
+<%= form.text_field :email %><br />
 <br />
 <%= form.label :password, form.object.new_record? ? nil : "Change password" %><br />
 <%= form.password_field :password %><br />
@@ -234,3 +253,7 @@ file 'app/views/users/show.html.erb', <<-END
 END
 
 rake 'db:migrate'
+
+rake 'db:create:all'
+
+git :add => ".", :commit => "-m 'Added authlogic.'"
