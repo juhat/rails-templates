@@ -300,14 +300,14 @@ END
 
 generate :mailer, 'UserMailer'
 
-file 'app/models/user_mailer', <<-END
+file 'app/models/user_mailer.rb', <<-END
 class UserMailer < ActionMailer::Base
   def welcome_email(user, pwd)
     recipients    user.email
     from          "Test User <test@atti.la>"
     subject       "Registration"
     sent_on       Time.now
-    body          {:user => user, :password => pwd}
+    body          :user => user, :password => pwd
   end
 end
 END
