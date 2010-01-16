@@ -1,4 +1,4 @@
-load_template "http://github.com/juhat/rails-templates/raw/master/base.rb"
+load_template "~/Sites/rails-templates/base.rb"
 
 gem 'authlogic'
 rake "gems:install", :sudo => true
