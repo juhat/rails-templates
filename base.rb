@@ -9,7 +9,7 @@ run "touch tmp/.gitignore log/.gitignore vendor/.gitignore"
 run "cp config/database.yml config/example_database.yml"
 run "rm public/index.html"
 run "rm public/favicon.ico"
-run "rm public/robots.txt"
+#run "rm public/robots.txt"
 
 file ".gitignore", <<-END
 log/*.log
