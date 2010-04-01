@@ -4,6 +4,8 @@
 #   generate :rspec
 # end
 
+@projektname = ask "Projectname:"
+
 run "echo 'TODO add readme content' > README"
 run "touch tmp/.gitignore log/.gitignore vendor/.gitignore"
 run "cp config/database.yml config/example_database.yml"
@@ -55,7 +57,7 @@ ActionMailer::Base.smtp_settings = {
     :tls => true,
     :address => "smtp.gmail.com",
     :port => "587",
-    :domain => "YOURDOMAIN",
+    :domain => "#{@projektname}-staging.com",
     :authentication => :plain,
     :user_name => "test@atti.la",
     :password => "testtest" 

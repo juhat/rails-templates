@@ -1,4 +1,5 @@
 load_template "~/Sites/rails-templates/base.rb"
+load_template "~/Sites/rails-templates/paperclip.rb"
 
 gem 'authlogic'
 rake "gems:install", :sudo => true
